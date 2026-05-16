@@ -1,0 +1,56 @@
+name: APK Batch Analysis
+
+on:
+  # 手动触发（方便测试）
+  workflow_dispatch:
+  # 也可在推送至 main
+
+jobs:
+  analyze:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java (for apktool.jar)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Set up Python 2.7
+        uses: actions/setup-python@v5
+        with:
+          python-version: '2.7'
+
+      - name: Install dependencies (if any)
+        run: |
+          # 脚本依赖标准库，无需额外安装
+          python --version
+          java -version
+
+      - name: Run original batch analysis (ApkTool.py)
+        run: |
+          # 执行 main.py，它会遍历 apk/ 目录下的所有 .apk 文件并调用 ApkTool.py -analyse
+          python main.py
+        shell: cmd
+
+      - name: Run compatibility analysis (apk_compat_analysis.py)
+        run: |
+          # 遍历 apk/ 目录，对每个 APK 执行补充分析
+          for %%f in (apk\*.apk) do (
+            echo Processing %%f
+            python apk_compat_analysis.py "%%f"
+          )
+        shell: cmd
+
+      - name: Upload analysis results as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-analysis-reports
+          path: |
+            *.txt
+            apk\*.txt
+            apk\unpack\*\*.txt
+          if-no-files-found: warn
