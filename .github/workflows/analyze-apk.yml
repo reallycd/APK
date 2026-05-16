@@ -4,9 +4,22 @@ on:
   # 手动触发（方便测试）
   workflow_dispatch:
 
+ 
+name: APK Batch Analysis
+
+on:
+  workflow_dispatch:          # 手动触发
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 8 * * 1'      # 每周一 UTC 8:00
+
 jobs:
   analyze:
-    runs-on: windows-latest
+    runs-on: windows-2025     # 显式指定，避免重定向警告
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'   # 强制使用 Node 24
 
     steps:
       - name: Checkout repository
@@ -18,26 +31,22 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
-      - name: Set up Python 2.7
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '2.7'
+          python-version: '3.11'
 
       - name: Install dependencies (if any)
         run: |
-          # 脚本依赖标准库，无需额外安装
           python --version
           java -version
 
-      - name: Run original batch analysis (ApkTool.py)
-        run: |
-          # 执行 main.py，它会遍历 apk/ 目录下的所有 .apk 文件并调用 ApkTool.py -analyse
-          python main.py
+      - name: Run original batch analysis (main.py)
+        run: python main.py
         shell: cmd
 
       - name: Run compatibility analysis (apk_compat_analysis.py)
         run: |
-          # 遍历 apk/ 目录，对每个 APK 执行补充分析
           for %%f in (apk\*.apk) do (
             echo Processing %%f
             python apk_compat_analysis.py "%%f"
