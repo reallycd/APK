@@ -4,15 +4,7 @@ on:
   # 手动触发（方便测试）
   workflow_dispatch:
 
- 
-name: APK Batch Analysis
-
-on:
-  workflow_dispatch:          # 手动触发
-  push:
-    branches: [ main ]
-  schedule:
-    - cron: '0 8 * * 1'      # 每周一 UTC 8:00
+# 每周一 UTC 8:00
 
 jobs:
   analyze:
