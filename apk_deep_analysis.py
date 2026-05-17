@@ -18,14 +18,22 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def get_aapt_path():
-    """查找 aapt 可执行文件（优先同目录，其次环境变量）"""
-    candidates = [os.path.join(os.path.dirname(sys.argv, 'aapt.exe'),
-        'aapt.exe',
-        'aapt')]
-    for c in candidates:
-        if os.path.exists(c):
-            return c
-    return 'aapt'   # 最后尝试系统 PATH
+    """
+    查找 aapt 可执行文件（优先同目录，其次环境变量）
+    参考：os.path.dirname 仅处理字符串，需要先获取绝对路径[1](@ref)[7](@ref)
+    """
+    # 获取当前脚本的绝对路径所在目录
+    script_path = os.path.abspath(sys.argv
+    script_dir = os.path.dirname(script_path)   # 脚本所在目录
+    candidates = [
+        os.path.join(script_dir, 'aapt.exe'),   # 与脚本同一目录
+        'aapt.exe',                              # 当前工作目录
+        'aapt'                                   # 系统 PATH
+    ]
+    for candidate in candidates:
+        if os.path.exists(candidate):
+            return candidate
+    return 'aapt'   # 兜底，可能触发 FileNotFoundError
 
 def get_sdk_info_via_aapt(apk_path):
     """
