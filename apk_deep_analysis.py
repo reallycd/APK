@@ -248,7 +248,7 @@ def main():
 
     # 注意：这里不能使用 [1] 索引 `os.path.dirname(apk_path)`，因为它返回字符串
     # 正确的写法：
-    default_unpack = os.path.join(os.path.dirname(apk_path), 'unpack', apk_name)
+    default_unpack = os.path.join(os.path.dirname(apk_path)[0], 'unpack', apk_name)
     unpack_dir = sys.argv[2] if len(sys.argv) > 2 else default_unpack
 
     if unpack_dir and not os.path.exists(unpack_dir):
