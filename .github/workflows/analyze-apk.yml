@@ -12,6 +12,7 @@ jobs:
 
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'   # 强制使用 Node 24
+      PYTHONIOENCODING: 'utf-8'   # 新增此行
 
     steps:
       - name: Checkout repository
