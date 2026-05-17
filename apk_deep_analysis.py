@@ -21,7 +21,7 @@ def get_aapt_path():
     """查找 aapt 可执行文件（优先同目录，其次环境变量）"""
     candidates = [os.path.join(os.path.dirname(sys.argv, 'aapt.exe'),
         'aapt.exe',
-        'aapt']
+        'aapt')]
     for c in candidates:
         if os.path.exists(c):
             return c
