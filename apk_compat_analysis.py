@@ -202,7 +202,6 @@ def generate_report(apk_path, unpack_dir):
 
     return '\n'.join(report_lines)
 
- 
 def main():
     if len(sys.argv) < 2:
         print("用法: python apk_compat_analysis.py <apk_path> [unpack_dir]")
@@ -232,36 +231,6 @@ def main():
 
     print(f"分析报告已生成: {output_file}")
     print(report)
-def main():
-    if len(sys.argv) < 2:
-        print("用法: python apk_compat_analysis.py <apk_path> [unpack_dir]")
-        sys.exit(1)
-
-    apk_path = sys.argv
-    if not os.path.exists(apk_path):
-        print(f"错误: APK 文件不存在: {apk_path}")
-        sys.exit(1)
-
-    apk_name = get_apk_name(apk_path)
-    # 默认反编译目录：apk_path 所在目录下的 unpack/<apk_name>
-    default_unpack = os.path.join(os.path.dirname(apk_path), 'unpack', apk_name)
-    unpack_dir = sys.argv[2] if len(sys.argv) > 2 else default_unpack
-
-    if not os.path.exists(unpack_dir):
-        print(f"错误: 反编译目录不存在: {unpack_dir}")
-        print("请先使用 ApkTool.py 的 -analyse 或 -unpack 命令生成反编译目录。")
-        sys.exit(1)
-
-    report = generate_report(apk_path, unpack_dir)
-
-    # 输出到文件：与原有分析文件同目录，命名为 <apk_name>_compat.txt
-    output_dir = os.path.dirname(apk_path)
-    output_file = os.path.join(output_dir, f"{apk_name}_compat.txt")
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(report)
-
-    print(f"分析报告已生成: {output_file}")
-    print(report)  # 同时打印到控制台
 
 if __name__ == '__main__':
     main()
