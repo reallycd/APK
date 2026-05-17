@@ -229,7 +229,7 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(report)
 
-    print(f"分析报告已生成: {output_file}")
+    print(f"Report: {output_file}")
     print(report)
 
 if __name__ == '__main__':
