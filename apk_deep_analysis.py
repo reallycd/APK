@@ -24,7 +24,7 @@ def get_aapt_path():
     说明：os.path.dirname 只接受字符串（不能传列表），此处使用 sys.argv[0]（脚本路径）[1](@ref)[6](@ref)
     """
     # 获取当前脚本的绝对路径所在目录（使用 sys.argv[0] 而非 sys.argv）
-    script_path = os.path.abspath(sys.argv)  # sys.argv[0] 是字符串
+    script_path = os.path.abspath(sys.argv[0])  # sys.argv[0] 是字符串
     script_dir = os.path.dirname(script_path)
     candidates = [
         os.path.join(script_dir, 'aapt.exe'),
