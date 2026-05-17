@@ -271,7 +271,7 @@ def main():
     apk_name = os.path.splitext(os.path.basename(apk_path))
 
     # 默认 unpack 目录：apk 所在目录下的 unpack/<apk_name>
-    default_unpack = os.path.join(os.path.dirname(apk_path), 'unpack', apk_name)
+    default_unpack = os.path.join(os.path.dirname(apk_path)[1], 'unpack', apk_name)
     unpack_dir = sys.argv[2] if len(sys.argv) > 2 else default_unpack
 
     # 如果 unpack 目录不存在，设为 None 以便报告中跳过相关检查
