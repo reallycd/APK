@@ -245,7 +245,7 @@ def main():
         print(f"错误: APK 文件不存在: {apk_path}")
         sys.exit(1)
 
-    apk_name = os.path.splitext(os.path.basename(apk_path))
+    apk_name = os.path.splitext(os.path.basename(apk_path))[0]
     default_unpack = os.path.join(os.path.dirname(apk_path), 'unpack', apk_name)
     unpack_dir = sys.argv[2] if len(sys.argv) > 2 else default_unpack
     if not os.path.exists(unpack_dir):
