@@ -23,7 +23,7 @@ def get_aapt_path():
     参考：os.path.dirname 仅处理字符串，需要先获取绝对路径[1](@ref)[7](@ref)
     """
     # 获取当前脚本的绝对路径所在目录
-    script_path = os.path.abspath(sys.argv
+    script_path = os.path.abspath(sys.argv)
     script_dir = os.path.dirname(script_path)   # 脚本所在目录
     candidates = [
         os.path.join(script_dir, 'aapt.exe'),   # 与脚本同一目录
