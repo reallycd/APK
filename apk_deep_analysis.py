@@ -240,7 +240,7 @@ def main():
         print("用法: python apk_deep_analysis.py <apk_path> [unpack_dir]")
         sys.exit(1)
 
-    apk_path = sys.argv
+    apk_path = sys.argv[1]
     if not os.path.exists(apk_path):
         print(f"错误: APK 文件不存在: {apk_path}")
         sys.exit(1)
