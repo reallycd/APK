@@ -1,4 +1,3 @@
- 
 # -*- coding: utf-8 -*-
 """
 深度分析脚本：解决 targetSdkVersion 解析失败、检测权限调用完整性
